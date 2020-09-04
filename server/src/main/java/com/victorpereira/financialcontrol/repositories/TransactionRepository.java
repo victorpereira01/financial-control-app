@@ -14,5 +14,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
 	
 	@Transactional(readOnly = true)
 	@Query("SELECT obj FROM Transaction obj WHERE obj.user.id = :userId")
-	public List<Transaction> findTransactions(@Param("userId")Integer userId);
+	public List<Transaction> findTransactions(@Param("userId")Integer user_Id);
 }
