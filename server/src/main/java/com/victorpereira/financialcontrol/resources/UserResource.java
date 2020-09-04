@@ -71,4 +71,17 @@ public class UserResource {
 		transaction.setUser(findById(id));
 		return transactionRepo.save(transaction);
 	}
+	
+	// nested endpoint to delete a transaction from a user
+	@DeleteMapping(value = "/{id}/transactions/{transactionId}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deleteTransaction(@PathVariable Integer id, @PathVariable Integer transactionId) {
+		List<Transaction> transactions = transactionRepo.findTransactions(id);
+		
+		for(Transaction tr : transactions) {
+			if(tr.getId() == transactionId) {
+				transactionRepo.deleteById(transactionId);
+			} 
+		}
+	}
 }
