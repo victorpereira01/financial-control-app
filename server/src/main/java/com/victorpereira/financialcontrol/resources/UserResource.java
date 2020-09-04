@@ -22,21 +22,21 @@ import com.victorpereira.financialcontrol.repositories.UserRepository;
 public class UserResource {
 	
 	@Autowired
-	private UserRepository repo;
+	private UserRepository userRepo;
 	
 	@GetMapping
 	public List<User> findAll() {
-		return repo.findAll();
+		return userRepo.findAll();
 	}
 	
 	@GetMapping(value="/{id}")
 	public User findById(@PathVariable Integer id) {
-		return repo.findById(id).orElseThrow();
+		return userRepo.findById(id).orElseThrow();
 	}
 
 	@PostMapping
 	public User insert(@RequestBody User user) {
-		return repo.save(user);
+		return userRepo.save(user);
 	}
 	
 	@PutMapping(value="/{id}")
@@ -45,12 +45,12 @@ public class UserResource {
 		usr.setBalance(user.getBalance());
 		usr.setRevenue(user.getRevenue());
 		usr.setExpenses(user.getExpenses());
-		return repo.save(usr);
+		return userRepo.save(usr);
 	}
 	
 	@DeleteMapping(value="/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Integer id) {
-		repo.delete(findById(id));
+		userRepo.delete(findById(id));
 	}
 }
