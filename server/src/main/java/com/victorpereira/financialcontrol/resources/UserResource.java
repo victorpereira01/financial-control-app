@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,11 +35,13 @@ public class UserResource {
 		return userRepo.findAll();
 	}
 
+	@CrossOrigin
 	@GetMapping(value = "/{id}")
 	public User findById(@PathVariable Integer id) {
 		return userRepo.findById(id).orElseThrow();
 	}
 
+	@CrossOrigin
 	@PostMapping
 	public User insert(@RequestBody User user) {
 		return userRepo.save(user);
@@ -52,7 +55,8 @@ public class UserResource {
 		usr.setExpenses(user.getExpenses());
 		return userRepo.save(usr);
 	}
-
+	
+	@CrossOrigin
 	@DeleteMapping(value = "/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Integer id) {
@@ -60,12 +64,14 @@ public class UserResource {
 	}
 
 	// nested endpoint that return all transaction from a user
+	@CrossOrigin
 	@GetMapping(value = "/{id}/transactions")
 	public List<Transaction> findTransactions(@PathVariable Integer id) {
 		return transactionRepo.findTransactions(id);
 	}
 	
 	// nested endpoint to create a transaction from a user
+	@CrossOrigin
 	@PostMapping(value = "/{id}/transactions")
 	public Transaction insertTransaction(@PathVariable Integer id, @RequestBody Transaction transaction) {
 		transaction.setUser(findById(id));
@@ -73,6 +79,7 @@ public class UserResource {
 	}
 	
 	// nested endpoint to delete a transaction from a user
+	@CrossOrigin
 	@DeleteMapping(value = "/{id}/transactions/{transactionId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteTransaction(@PathVariable Integer id, @PathVariable Integer transactionId) {
