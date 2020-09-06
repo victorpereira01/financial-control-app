@@ -35,8 +35,10 @@ export default class Main extends Component {
         this.props.navigation.navigate('Create');
     }
 
-
-
+    handleNavigateToTransactions = () => {
+        this.props.navigation.navigate('Transactions');
+    }
+    
     isPositive = (transaction) => {
         if (transaction.value >= 0) {
             return <Text style={styles.positive}>R$ {transaction.value}</Text>
