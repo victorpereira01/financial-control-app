@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
-import api from '../../services/api';
-import { Link } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
+
+import api from '../../services/api';
 
 export default class Main extends Component {
 
@@ -18,7 +18,6 @@ export default class Main extends Component {
 
     loadData = async () => {
         const response = await api.get('/1');
-
         const user = response.data;
 
         this.setState({ user });
@@ -26,19 +25,22 @@ export default class Main extends Component {
 
     loadTransactions = async () => {
         const response = await api.get('/1/transactions');
-
         const transactions = response.data;
 
         this.setState({ transactions });
     }
 
+    handleNavigateToCreate() {
+        
+    }
+
     isPositive = (transaction) => {
-        if(transaction.value >= 0) {
+        if (transaction.value >= 0) {
             return <Text style={styles.positive}>R$ {transaction.value}</Text>
-        }else {
+        } else {
             return <Text style={styles.negative}>R$ {transaction.value}</Text>
         }
-    }   
+    }
 
     render() {
         return (
@@ -63,19 +65,21 @@ export default class Main extends Component {
                         <Text style={styles.buttonText}>More</Text>
                     </RectButton>
                 </View>
-            
+
                 <View style={styles.transactionContainer}>
                     {this.state.transactions.map(transaction => {
                         return (
                             <View style={styles.item} key={transaction.id}>
                                 <Text style={styles.itemText} >{transaction.name}</Text>
-                                { this.isPositive(transaction) }
+                                {this.isPositive(transaction)}
                             </View>
                         )
                     })}
                 </View>
-                    
-                <RectButton style={styles.addButton}>
+
+                <RectButton style={styles.addButton} onPress={() => 
+                    this.props.navigation.navigate('Create') 
+                }>
                     <Text style={styles.addButtonText}>Add Transaction</Text>
                 </RectButton>
             </View>
@@ -172,7 +176,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#e0e0e0',
         borderRightWidth: 1,
         borderRightColor: '#e0e0e0',
-        flexDirection: 'row', 
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between'
     },

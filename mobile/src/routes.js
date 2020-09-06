@@ -3,13 +3,14 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import Main from './pages/Main';
+import Create from './pages/Create';
 
 const AppStack = createStackNavigator();
 
 const navigationOptions = {
     title: "Financial Control",
-    headerTitleStyle: {
-        alignSelf: 'center'
+    headerTitleStyle: { 
+        alignSelf: 'center',
     },
     headerTintColor: "#8926D8",
     headerStyle: {
@@ -22,6 +23,7 @@ const Routes = () => {
         <NavigationContainer>
             <AppStack.Navigator>
                 <AppStack.Screen name="Main" component={Main} options={navigationOptions} />
+                <AppStack.Screen name="Create" component={Create} options={navigationOptions} />
             </AppStack.Navigator>
         </NavigationContainer>
     )
