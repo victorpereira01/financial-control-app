@@ -10,7 +10,7 @@ export default class Create extends Component {
         name: '',
         value: '',
     }
-
+    
     handleSubmit = async () => {
         const transaction = {
             name: this.state.name,
@@ -33,11 +33,11 @@ export default class Create extends Component {
 
                 <View style={styles.inputContainer}>
                     <Text style={styles.placeholder}>Name</Text>
-                    <TextInput style={styles.input} onChangeText={(name) => this.setState({name})} />
+                    <TextInput style={styles.input} onChangeText={(name) => this.setState({ name })} />
                 </View>
                 <View style={styles.inputContainer}>
                     <Text style={styles.placeholder}>Value</Text>
-                    <TextInput keyboardType='numeric' style={styles.input} onChangeText={(value) => this.setState({value})} />
+                    <TextInput keyboardType='numeric' style={styles.input} onChangeText={(value) => this.setState({ value })} />
                 </View>
 
                 <RectButton style={styles.confirmButton} onPress={this.handleSubmit}>

@@ -12,6 +12,7 @@ export default class Main extends Component {
     }
 
     componentDidMount() {
+        this.props.navigation.addListener('focus', this.loadTransactions);
         this.loadData();
         this.loadTransactions();
     }
@@ -31,8 +32,10 @@ export default class Main extends Component {
     }
 
     handleNavigateToCreate = () => {
-        this.props.navigation.navigate('Create'); 
+        this.props.navigation.navigate('Create');
     }
+
+
 
     isPositive = (transaction) => {
         if (transaction.value >= 0) {
@@ -61,13 +64,13 @@ export default class Main extends Component {
 
                 <View style={styles.transactionHeader}>
                     <Text style={styles.transactionHeaderTitle}>Transactions</Text>
-                    <RectButton style={styles.button} onPress={this.loadData}>
+                    <RectButton style={styles.button} onPress={this.handleNavigateToTransactions}>
                         <Text style={styles.buttonText}>More</Text>
                     </RectButton>
                 </View>
 
                 <View style={styles.transactionContainer}>
-                    {this.state.transactions.map(transaction => {
+                    {this.state.transactions.slice(0, 5).map(transaction => {
                         return (
                             <View style={styles.item} key={transaction.id}>
                                 <Text style={styles.itemText} >{transaction.name}</Text>
