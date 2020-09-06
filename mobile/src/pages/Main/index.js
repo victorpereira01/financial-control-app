@@ -30,8 +30,8 @@ export default class Main extends Component {
         this.setState({ transactions });
     }
 
-    handleNavigateToCreate() {
-        
+    handleNavigateToCreate = () => {
+        this.props.navigation.navigate('Create'); 
     }
 
     isPositive = (transaction) => {
@@ -77,9 +77,7 @@ export default class Main extends Component {
                     })}
                 </View>
 
-                <RectButton style={styles.addButton} onPress={() => 
-                    this.props.navigation.navigate('Create') 
-                }>
+                <RectButton style={styles.addButton} onPress={this.handleNavigateToCreate}>
                     <Text style={styles.addButtonText}>Add Transaction</Text>
                 </RectButton>
             </View>

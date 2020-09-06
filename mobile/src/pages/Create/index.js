@@ -6,6 +6,26 @@ import api from '../../services/api';
 
 export default class Create extends Component {
 
+    state = {
+        name: '',
+        value: '',
+    }
+
+    handleSubmit = async () => {
+        const transaction = {
+            name: this.state.name,
+            value: this.state.value
+        }
+
+        await api.post('/1/transactions', transaction);
+
+        this.handleNavigateBack();
+    }
+
+    handleNavigateBack() {
+        this.props.navigation.goBack();
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -13,19 +33,17 @@ export default class Create extends Component {
 
                 <View style={styles.inputContainer}>
                     <Text style={styles.placeholder}>Name</Text>
-                    <TextInput style={styles.input} />
+                    <TextInput style={styles.input} onChangeText={(name) => this.setState({name})} />
                 </View>
                 <View style={styles.inputContainer}>
                     <Text style={styles.placeholder}>Value</Text>
-                    <TextInput keyboardType='numeric' style={styles.input} />
+                    <TextInput keyboardType='numeric' style={styles.input} onChangeText={(value) => this.setState({value})} />
                 </View>
 
-                <RectButton style={styles.confirmButton}>
+                <RectButton style={styles.confirmButton} onPress={this.handleSubmit}>
                     <Text style={styles.buttonText}>Confirm</Text>
                 </RectButton>
-                <RectButton style={styles.cancelButton} onPress={() => {
-                    this.props.navigation.navigate('Main')
-                }}>
+                <RectButton style={styles.cancelButton} onPress={this.handleNavigateBack}>
                     <Text style={styles.buttonText}>Cancel</Text>
                 </RectButton>
             </View>
@@ -85,5 +103,4 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontFamily: 'Ubuntu_500Medium'
     }
-
 });
