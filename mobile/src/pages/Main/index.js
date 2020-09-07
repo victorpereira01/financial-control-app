@@ -12,10 +12,14 @@ export default class Main extends Component {
     }
 
     componentDidMount() {
-        this.props.navigation.addListener('focus', this.loadTransactions);
+        this.props.navigation.addListener('focus', () => {
+            this.loadData();
+            this.loadTransactions(); 
+        });
         this.loadData();
         this.loadTransactions();
     }
+
 
     loadData = async () => {
         const response = await api.get('/1');
