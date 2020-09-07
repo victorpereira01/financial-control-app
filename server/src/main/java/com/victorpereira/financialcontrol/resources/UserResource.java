@@ -74,7 +74,16 @@ public class UserResource {
 	@CrossOrigin
 	@PostMapping(value = "/{id}/transactions")
 	public Transaction insertTransaction(@PathVariable Integer id, @RequestBody Transaction transaction) {
-		transaction.setUser(findById(id));
+		User usr = findById(id);
+		if (transaction.getValue() > 0) {
+			usr.setBalance(usr.getBalance() + transaction.getValue());
+			usr.setRevenue(usr.getRevenue() + transaction.getValue());
+		} else {
+			usr.setBalance(usr.getBalance() + transaction.getValue());
+			usr.setExpenses(usr.getExpenses() - transaction.getValue());
+		}
+		transaction.setUser(usr);
+		userRepo.save(usr);
 		return transactionRepo.save(transaction);
 	}
 	

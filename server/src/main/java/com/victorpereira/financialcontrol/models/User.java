@@ -2,6 +2,7 @@ package com.victorpereira.financialcontrol.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +29,7 @@ public class User {
 	
 	private Double expenses;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Transaction> transactions;
 
 	public User(Integer id, Double balance, Double revenue, Double expenses) {
