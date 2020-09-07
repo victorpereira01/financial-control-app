@@ -13,6 +13,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
 
 	
 	@Transactional(readOnly = true)
-	@Query("SELECT obj FROM Transaction obj WHERE obj.user.id = :userId")
+	@Query("SELECT obj FROM Transaction obj WHERE obj.user.id = :userId ORDER BY obj.id DESC")
 	public List<Transaction> findTransactions(@Param("userId")Integer user_Id);
 }
