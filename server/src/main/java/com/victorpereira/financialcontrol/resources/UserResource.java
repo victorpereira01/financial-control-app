@@ -17,74 +17,57 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.victorpereira.financialcontrol.models.Transaction;
 import com.victorpereira.financialcontrol.models.User;
-import com.victorpereira.financialcontrol.repositories.TransactionRepository;
-import com.victorpereira.financialcontrol.repositories.UserRepository;
+import com.victorpereira.financialcontrol.services.UserService;
 
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
-
+	
 	@Autowired
-	private UserRepository userRepo;
-
-	@Autowired
-	private TransactionRepository transactionRepo;
-
+	private UserService userService;
+	
+	
 	@GetMapping
 	public List<User> findAll() {
-		return userRepo.findAll();
+		return userService.findAll();
 	}
 
 	@CrossOrigin
 	@GetMapping(value = "/{id}")
 	public User findById(@PathVariable Integer id) {
-		return userRepo.findById(id).orElseThrow();
+		return userService.findById(id);
 	}
 
 	@CrossOrigin
 	@PostMapping
 	public User insert(@RequestBody User user) {
-		return userRepo.save(user);
+		return userService.insert(user);
 	}
 
 	@PutMapping(value = "/{id}")
 	public User update(@RequestBody User user, @PathVariable Integer id) {
-		User usr = findById(id);
-		usr.setBalance(user.getBalance());
-		usr.setRevenue(user.getRevenue());
-		usr.setExpenses(user.getExpenses());
-		return userRepo.save(usr);
+		return userService.update(user, id);
 	}
 	
 	@CrossOrigin
 	@DeleteMapping(value = "/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Integer id) {
-		userRepo.delete(findById(id));
+		userService.delete(id);
 	}
 
 	// nested endpoint that return all transaction from a user
 	@CrossOrigin
 	@GetMapping(value = "/{id}/transactions")
-	public List<Transaction> findTransactions(@PathVariable Integer id) {
-		return transactionRepo.findTransactions(id);
+	public List<Transaction> findUserTransactions(@PathVariable Integer id) {
+		return userService.findUserTransactions(id);
 	}
 	
 	// nested endpoint to create a transaction from a user
 	@CrossOrigin
 	@PostMapping(value = "/{id}/transactions")
-	public Transaction insertTransaction(@PathVariable Integer id, @RequestBody Transaction transaction) {
-		User usr = findById(id);
-		if (transaction.getValue() > 0) {
-			usr.setBalance(usr.getBalance() + transaction.getValue());
-			usr.setRevenue(usr.getRevenue() + transaction.getValue());
-		} else {
-			usr.setBalance(usr.getBalance() + transaction.getValue());
-			usr.setExpenses(usr.getExpenses() - transaction.getValue());
-		}
-		transaction.setUser(usr);
-		userRepo.save(usr);
-		return transactionRepo.save(transaction);
+	public Transaction insertTransaction(@RequestBody Transaction transaction, @PathVariable Integer id) {
+		return userService.insertTransaction(transaction, id);
 	}
 	
 	// nested endpoint to delete a transaction from a user
@@ -92,12 +75,6 @@ public class UserResource {
 	@DeleteMapping(value = "/{id}/transactions/{transactionId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteTransaction(@PathVariable Integer id, @PathVariable Integer transactionId) {
-		List<Transaction> transactions = transactionRepo.findTransactions(id);
-		
-		for(Transaction tr : transactions) {
-			if(tr.getId() == transactionId) {
-				transactionRepo.deleteById(transactionId);
-			} 
-		}
+		userService.deleteTransaction(id, transactionId);
 	}
 }
