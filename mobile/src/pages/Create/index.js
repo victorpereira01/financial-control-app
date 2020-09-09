@@ -19,9 +19,12 @@ export default function Create() {
             value
         }
 
-        await api.post('/1/transactions', transaction);
-
-        handleNavigateBack();
+        if(name.length == 0 || value.length == 0) {
+            alert('Please insert all fields'); 
+        }else {
+            await api.post('/1/transactions', transaction);
+            handleNavigateBack()
+        }
     }
 
     handleNavigateBack = () => {
