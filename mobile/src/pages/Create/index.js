@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { RectButton, TextInput } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
@@ -12,10 +12,6 @@ export default function Create() {
 
     const [name, setName] = useState('');
     const [value, setValue] = useState('');
-
-    useEffect(() => {
-        handleSubmit();
-    }, [])
 
     handleSubmit = async () => {
         const transaction = {
