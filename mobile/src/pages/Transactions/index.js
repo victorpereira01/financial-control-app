@@ -1,24 +1,21 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
-import { RectButton, TextInput } from 'react-native-gesture-handler';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 
 import api from '../../services/api';
 
-export default class Transactions extends Component {
+export default function Transactions() {
 
-    state = {
-        transactions: []
-    }
+    const [transactions, setTransactions] = useState([]);
 
-    componentDidMount() {
-        this.loadTransactions();
-    }
+    useEffect(() => {
+        loadTransactions();
+    }, []);
 
     loadTransactions = async () => {
         const response = await api.get('/1/transactions');
         const transactions = response.data;
 
-        this.setState({ transactions });
+        setTransactions(transactions);
     }
 
     isPositive = (transaction) => {
@@ -29,24 +26,22 @@ export default class Transactions extends Component {
         }
     }
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text style={styles.title}>Your transactions</Text>
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>Your transactions</Text>
 
-                <View style={styles.transactionContainer}>
-                    {this.state.transactions.map(transaction => {
-                        return (
-                            <View style={styles.item} key={transaction.id}>
-                                <Text style={styles.itemText} >{transaction.name}</Text>
-                                {this.isPositive(transaction)}
-                            </View>
-                        )
-                    })}
-                </View>
+            <View style={styles.transactionContainer}>
+                {transactions.map(transaction => {
+                    return (
+                        <View style={styles.item} key={transaction.id}>
+                            <Text style={styles.itemText} >{transaction.name}</Text>
+                            {isPositive(transaction)}
+                        </View>
+                    )
+                })}
             </View>
-        )
-    }
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({

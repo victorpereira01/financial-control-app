@@ -1,48 +1,48 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native'
 
 import api from '../../services/api';
 
-export default class Main extends Component {
+export default function Main() {
 
-    state = {
-        user: [],
-        transactions: [],
-    }
+    const navigation = useNavigation();
 
-    componentDidMount() {
-        this.props.navigation.addListener('focus', () => {
-            this.loadData();
-            this.loadTransactions(); 
+    const [user, setUser] = useState('');
+    const [transactions, setTransactions] = useState([]);
+
+    useEffect(() => {
+        navigation.addListener('focus', () => {
+            loadData();
+            loadTransactions();
         });
-        this.loadData();
-        this.loadTransactions();
-    }
-
+        loadData();
+        loadTransactions();
+    }, [])
 
     loadData = async () => {
         const response = await api.get('/1');
         const user = response.data;
 
-        this.setState({ user });
+        setUser(user);
     }
 
     loadTransactions = async () => {
         const response = await api.get('/1/transactions');
         const transactions = response.data;
 
-        this.setState({ transactions });
+        setTransactions(transactions);
     }
 
     handleNavigateToCreate = () => {
-        this.props.navigation.navigate('Create');
+        navigation.navigate('Create');
     }
 
     handleNavigateToTransactions = () => {
-        this.props.navigation.navigate('Transactions');
+        navigation.navigate('Transactions');
     }
-    
+
     isPositive = (transaction) => {
         if (transaction.value >= 0) {
             return <Text style={styles.positive}>R$ {transaction.value}</Text>
@@ -51,47 +51,46 @@ export default class Main extends Component {
         }
     }
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text style={styles.title}>Current Balance</Text>
-                <Text style={styles.balance}>R$ {this.state.user.balance}</Text>
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>Current Balance</Text>
+            <Text style={styles.balance}>R$ {user.balance}</Text>
 
-                <View style={styles.historicContainer}>
-                    <View style={styles.historicItem}>
-                        <Text style={styles.historicTitle}>RENEVUE</Text>
-                        <Text style={styles.revenueValue}>R$ {this.state.user.revenue}</Text>
-                    </View>
-                    <View style={styles.historicItem}>
-                        <Text style={styles.historicTitle}>EXPENSES</Text>
-                        <Text style={styles.expensesValue}>R$ {this.state.user.expenses}</Text>
-                    </View>
+            <View style={styles.historicContainer}>
+                <View style={styles.historicItem}>
+                    <Text style={styles.historicTitle}>RENEVUE</Text>
+                    <Text style={styles.revenueValue}>R$ {user.revenue}</Text>
                 </View>
-
-                <View style={styles.transactionHeader}>
-                    <Text style={styles.transactionHeaderTitle}>Transactions</Text>
-                    <RectButton style={styles.button} onPress={this.handleNavigateToTransactions}>
-                        <Text style={styles.buttonText}>More</Text>
-                    </RectButton>
+                <View style={styles.historicItem}>
+                    <Text style={styles.historicTitle}>EXPENSES</Text>
+                    <Text style={styles.expensesValue}>R$ {user.expenses}</Text>
                 </View>
+            </View>
 
-                <View style={styles.transactionContainer}>
-                    {this.state.transactions.slice(0, 5).map(transaction => {
-                        return (
-                            <View style={styles.item} key={transaction.id}>
-                                <Text style={styles.itemText} >{transaction.name}</Text>
-                                {this.isPositive(transaction)}
-                            </View>
-                        )
-                    })}
-                </View>
-
-                <RectButton style={styles.addButton} onPress={this.handleNavigateToCreate}>
-                    <Text style={styles.addButtonText}>Add Transaction</Text>
+            <View style={styles.transactionHeader}>
+                <Text style={styles.transactionHeaderTitle}>Transactions</Text>
+                <RectButton style={styles.button} onPress={handleNavigateToTransactions}>
+                    <Text style={styles.buttonText}>More</Text>
                 </RectButton>
             </View>
-        )
-    }
+
+            <View style={styles.transactionContainer}>
+                {transactions.slice(0, 5).map(transaction => {
+                    return (
+                        <View style={styles.item} key={transaction.id}>
+                            <Text style={styles.itemText} >{transaction.name}</Text>
+                            {isPositive(transaction)}
+                        </View>
+                    )
+                })}
+            </View>
+
+            <RectButton style={styles.addButton} onPress={handleNavigateToCreate}>
+                <Text style={styles.addButtonText}>Add Transaction</Text>
+            </RectButton>
+        </View>
+    )
+
 }
 
 const styles = StyleSheet.create({

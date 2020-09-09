@@ -1,54 +1,57 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 import { RectButton, TextInput } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native'
 
 import api from '../../services/api';
 
-export default class Create extends Component {
+export default function Create() {
 
-    state = {
-        name: '',
-        value: '',
-    }
-    
+    const navigation = useNavigation();
+
+    const [name, setName] = useState('');
+    const [value, setValue] = useState('');
+
+    useEffect(() => {
+        handleSubmit();
+    }, [])
+
     handleSubmit = async () => {
         const transaction = {
-            name: this.state.name,
-            value: this.state.value
+            name,
+            value
         }
 
         await api.post('/1/transactions', transaction);
 
-        this.handleNavigateBack();
+        handleNavigateBack();
     }
 
-    handleNavigateBack() {
-        this.props.navigation.goBack();
+    handleNavigateBack = () => {
+        navigation.goBack();
     }
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text style={styles.title}>Add a Transaction</Text>
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>Add a Transaction</Text>
 
-                <View style={styles.inputContainer}>
-                    <Text style={styles.placeholder}>Name</Text>
-                    <TextInput style={styles.input} onChangeText={(name) => this.setState({ name })} />
-                </View>
-                <View style={styles.inputContainer}>
-                    <Text style={styles.placeholder}>Value</Text>
-                    <TextInput keyboardType='numeric' style={styles.input} onChangeText={(value) => this.setState({ value })} />
-                </View>
-
-                <RectButton style={styles.confirmButton} onPress={this.handleSubmit}>
-                    <Text style={styles.buttonText}>Confirm</Text>
-                </RectButton>
-                <RectButton style={styles.cancelButton} onPress={this.handleNavigateBack}>
-                    <Text style={styles.buttonText}>Cancel</Text>
-                </RectButton>
+            <View style={styles.inputContainer}>
+                <Text style={styles.placeholder}>Name</Text>
+                <TextInput style={styles.input} onChangeText={(name) => setName(name)} />
             </View>
-        )
-    }
+            <View style={styles.inputContainer}>
+                <Text style={styles.placeholder}>Value</Text>
+                <TextInput keyboardType='numeric' style={styles.input} onChangeText={(value) => setValue(value)} />
+            </View>
+
+            <RectButton style={styles.confirmButton} onPress={handleSubmit}>
+                <Text style={styles.buttonText}>Confirm</Text>
+            </RectButton>
+            <RectButton style={styles.cancelButton} onPress={handleNavigateBack}>
+                <Text style={styles.buttonText}>Cancel</Text>
+            </RectButton>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
