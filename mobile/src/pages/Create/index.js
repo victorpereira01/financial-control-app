@@ -4,6 +4,7 @@ import { RectButton, TextInput } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
 
 import api from '../../services/api';
+import globalStyles from '../../../public/stylesheets/main';
 
 export default function Create() {
 
@@ -32,43 +33,31 @@ export default function Create() {
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Add a Transaction</Text>
+        <View style={globalStyles.container}>
+            <Text style={globalStyles.title}>Add a Transaction</Text>
 
             <View style={styles.inputContainer}>
                 <Text style={styles.placeholder}>Name</Text>
-                <TextInput style={styles.input} onChangeText={(name) => setName(name)} />
+                <TextInput style={styles.input} onChangeText={setName} />
             </View>
             <View style={styles.inputContainer}>
                 <Text style={styles.placeholder}>Value</Text>
-                <TextInput keyboardType='numeric' style={styles.input} onChangeText={(value) => setValue(value)} />
+                <TextInput keyboardType='numeric' style={styles.input} onChangeText={setValue} />
             </View>
 
-            <RectButton style={styles.confirmButton} onPress={handleSubmit}>
-                <Text style={styles.buttonText}>Confirm</Text>
+            <View style={styles.blank}></View>
+
+            <RectButton style={globalStyles.button} onPress={handleSubmit}>
+                <Text style={globalStyles.buttonText}>Confirm</Text>
             </RectButton>
             <RectButton style={styles.cancelButton} onPress={handleNavigateBack}>
-                <Text style={styles.buttonText}>Cancel</Text>
+                <Text style={globalStyles.buttonText}>Cancel</Text>
             </RectButton>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        marginRight: 15,
-        marginLeft: 15,
-        backgroundColor: '#f0f0f0'
-    },
-    title: {
-        color: '#616161',
-        marginTop: 20,
-        paddingBottom: 10,
-        fontSize: 20,
-        fontFamily: 'Ubuntu_400Regular',
-        borderBottomWidth: 1.5,
-        borderBottomColor: '#bfbfbf',
-    },
     inputContainer: {
         marginTop: 30,
     },
@@ -87,13 +76,6 @@ const styles = StyleSheet.create({
         padding: 10,
         height: 40
     },
-    confirmButton: {
-        marginTop: 320,
-        backgroundColor: '#8926D8',
-        padding: 15,
-        borderRadius: 25,
-        alignItems: 'center'
-    },
     cancelButton: {
         marginTop: 20,
         backgroundColor: '#D3483F',
@@ -101,9 +83,7 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         alignItems: 'center'
     },
-    buttonText: {
-        color: 'white',
-        fontSize: 18,
-        fontFamily: 'Ubuntu_500Medium'
+    blank: {
+        paddingTop: 320
     }
 });

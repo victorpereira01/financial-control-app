@@ -4,6 +4,7 @@ import { RectButton } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
 
 import api from '../../services/api';
+import globalStyles from '../../../public/stylesheets/main';
 
 export default function Main() {
 
@@ -45,14 +46,14 @@ export default function Main() {
 
     isPositive = (transaction) => {
         if (transaction.value >= 0) {
-            return <Text style={styles.positive}>R$ {transaction.value}</Text>
+            return <Text style={globalStyles.positive}>R$ {transaction.value}</Text>
         } else {
-            return <Text style={styles.negative}>R$ {transaction.value}</Text>
+            return <Text style={globalStyles.negative}>R$ {transaction.value}</Text>
         }
     }
 
     return (
-        <View style={styles.container}>
+        <View style={globalStyles.container}>
             <Text style={styles.title}>Current Balance</Text>
             <Text style={styles.balance}>R$ {user.balance}</Text>
 
@@ -77,16 +78,16 @@ export default function Main() {
             <View style={styles.transactionContainer}>
                 {transactions.slice(0, 5).map(transaction => {
                     return (
-                        <View style={styles.item} key={transaction.id}>
-                            <Text style={styles.itemText} >{transaction.name}</Text>
+                        <View style={globalStyles.transactionItem} key={transaction.id}>
+                            <Text style={globalStyles.transactionText} >{transaction.name}</Text>
                             {isPositive(transaction)}
                         </View>
                     )
                 })}
             </View>
 
-            <RectButton style={styles.addButton} onPress={handleNavigateToCreate}>
-                <Text style={styles.addButtonText}>Add Transaction</Text>
+            <RectButton style={globalStyles.button} onPress={handleNavigateToCreate}>
+                <Text style={globalStyles.buttonText}>Add Transaction</Text>
             </RectButton>
         </View>
     )
@@ -94,11 +95,6 @@ export default function Main() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        marginRight: 15,
-        marginLeft: 15,
-        backgroundColor: '#f0f0f0'
-    },
     title: {
         color: '#616161',
         marginTop: 20,
@@ -171,49 +167,6 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: 15,
-        fontFamily: 'Ubuntu_500Medium'
-    },
-    item: {
-        marginTop: 5,
-        marginBottom: 5,
-        height: 55,
-        backgroundColor: 'white',
-        borderBottomWidth: 1,
-        borderBottomColor: '#e0e0e0',
-        borderRightWidth: 1,
-        borderRightColor: '#e0e0e0',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between'
-    },
-    itemText: {
-        color: '#616161',
-        fontSize: 18,
-        fontFamily: 'Ubuntu_400Regular',
-        marginLeft: 20
-    },
-    positive: {
-        color: '#5ACC24',
-        fontSize: 18,
-        fontFamily: 'Ubuntu_400Regular',
-        marginRight: 20
-    },
-    negative: {
-        color: '#D3483F',
-        fontSize: 18,
-        fontFamily: 'Ubuntu_400Regular',
-        marginRight: 20
-    },
-    addButton: {
-        marginTop: 20,
-        backgroundColor: '#8926D8',
-        padding: 15,
-        borderRadius: 25,
-        alignItems: 'center'
-    },
-    addButtonText: {
-        color: 'white',
-        fontSize: 18,
         fontFamily: 'Ubuntu_500Medium'
     }
 })
