@@ -26,9 +26,9 @@ public class TestConfig {
 	@Bean
 	public boolean instatiateDatabase() throws ParseException {
 
-		User u1 = new User(null, 1200.00, 1500.00, 300.00);
-		User u2 = new User(null, 200.00, 1100.00, 900.00);
-		User u3 = new User(null, 650.00, 1650.00, 1000.00);
+		User u1 = new User(null, "victor.cordeiro2@gmail.com", "123", 1200.00, 1500.00, 300.00);
+		User u2 = new User(null, "ana@gmail.com", "123", 200.00, 1100.00, 900.00);
+		User u3 = new User(null, "joao@gmail.com", "123", 650.00, 1650.00, 1000.00);
 		
 		Transaction t1 = new Transaction(null, "Salário", 450.00);
 		Transaction t2 = new Transaction(null, "Conserto do carro", 100.00);

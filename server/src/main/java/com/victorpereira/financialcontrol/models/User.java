@@ -14,7 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="tb_user")
+@Table(name = "tb_user")
 @Data
 @NoArgsConstructor
 public class User {
@@ -22,18 +22,24 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	private Double balance; 
+
+	private String email;
+
+	private String password;
+
+	private Double balance;
 
 	private Double revenue;
-	
+
 	private Double expenses;
-	
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Transaction> transactions;
 
-	public User(Integer id, Double balance, Double revenue, Double expenses) {
+	public User(Integer id, String email, String password, Double balance, Double revenue, Double expenses) {
 		this.id = id;
+		this.email = email;
+		this.password = password;
 		this.balance = balance;
 		this.revenue = revenue;
 		this.expenses = expenses;

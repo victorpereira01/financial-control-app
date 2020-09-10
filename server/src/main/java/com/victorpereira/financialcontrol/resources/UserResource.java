@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +37,12 @@ public class UserResource {
 	@GetMapping(value = "/{id}")
 	public User findById(@PathVariable Integer id) {
 		return userService.findById(id);
+	}
+	
+	@CrossOrigin
+	@GetMapping(value= "/email")
+	public User findByEmail(@RequestParam(value="value") String email) {
+		return userService.findByEmail(email);
 	}
 
 	@CrossOrigin
