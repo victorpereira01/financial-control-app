@@ -9,6 +9,7 @@ import com.victorpereira.financialcontrol.models.Transaction;
 import com.victorpereira.financialcontrol.models.User;
 import com.victorpereira.financialcontrol.repositories.TransactionRepository;
 import com.victorpereira.financialcontrol.repositories.UserRepository;
+import com.victorpereira.financialcontrol.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class UserService {
@@ -24,11 +25,16 @@ public class UserService {
 	}
 
 	public User findById(Integer id) {
-		return userRepo.findById(id).orElseThrow();
+		return userRepo.findById(id).orElseThrow(
+				() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Type: " + User.class.getName()));
 	}
 
 	public User findByEmail(String email) {
-		return userRepo.findByEmail(email);
+		User usr = userRepo.findByEmail(email);
+		if (usr == null) {
+			throw new ObjectNotFoundException("Object not found! Email: " + email + ", Type: " + User.class.getName());
+		}
+		return usr;
 	}
 
 	public User insert(User user) {
