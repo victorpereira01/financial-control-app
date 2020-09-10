@@ -2,6 +2,7 @@ package com.victorpereira.financialcontrol.services;
 
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,7 @@ public class UserService {
 	}
 
 	public User insert(User user) {
+		user.setPassword(hashPassword(user.getPassword()));
 		return userRepo.save(user);
 	}
 
@@ -71,7 +73,7 @@ public class UserService {
 		findTransactionAndDelete(transactions, transactionId);
 	}
 
-	// copies a user data to another, the first argument is the one to be copied,
+	// copies a user's data to another, the first argument is the one to be copied,
 	// the second is the receiver
 	private void updateData(User user, User usr) {
 		usr.setEmail(user.getEmail());
@@ -102,5 +104,10 @@ public class UserService {
 				break;
 			}
 		}
+	}
+	
+	// encrypts a user's password using BCrypt
+	private String hashPassword(String plainTextPassword) {
+		return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
 	}
 }
