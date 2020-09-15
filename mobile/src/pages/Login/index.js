@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { TextInput, RectButton } from 'react-native-gesture-handler';
 import { Link, useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome'
+import bcrypt from 'react-native-bcrypt';
 
 import api from '../../services/api';
 
@@ -21,10 +22,16 @@ export default function Login() {
         try {
             const response = await api.get(`/email?value=${email}`);
             const userId = response.data.id;
-         
-            navigation.navigate('Main', {
-                userId
-            });
+
+            bcrypt.compare(password, response.data.password, (err, res) => {
+                if (res) {
+                    navigation.navigate('Main', {
+                        userId
+                    });
+                } else {
+                    alert('Password is invalid');
+                }
+            })
         } catch (e) {
             alert('Username or password is invalid');
         }
