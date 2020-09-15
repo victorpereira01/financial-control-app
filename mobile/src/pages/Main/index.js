@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 import api from '../../services/api';
 import globalStyles from '../../../public/stylesheets/main';
@@ -13,6 +13,10 @@ export default function Main() {
     const [user, setUser] = useState('');
     const [transactions, setTransactions] = useState([]);
 
+    const route = useRoute();
+
+    const userId = route.params.userId;
+
     useEffect(() => {
         navigation.addListener('focus', () => {
             loadData();
@@ -23,25 +27,29 @@ export default function Main() {
     }, [])
 
     loadData = async () => {
-        const response = await api.get('/1');
+        const response = await api.get(`/${userId}`);
         const user = response.data;
 
         setUser(user);
     }
 
     loadTransactions = async () => {
-        const response = await api.get('/1/transactions');
+        const response = await api.get(`/${userId}/transactions`);
         const transactions = response.data;
 
         setTransactions(transactions);
     }
 
     handleNavigateToCreate = () => {
-        navigation.navigate('Create');
+        navigation.navigate('Create', {
+            userId
+        });
     }
 
     handleNavigateToTransactions = () => {
-        navigation.navigate('Transactions');
+        navigation.navigate('Transactions', {
+            userId
+        });
     }
 
     isPositive = (transaction) => {

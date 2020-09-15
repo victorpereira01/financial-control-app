@@ -3,17 +3,22 @@ import { StyleSheet, View, Text } from 'react-native';
 
 import api from '../../services/api';
 import globalStyles from '../../../public/stylesheets/main'
+import { useRoute } from '@react-navigation/native';
 
 export default function Transactions() {
 
     const [transactions, setTransactions] = useState([]);
+
+    const route = useRoute();
+
+    const userId = route.params.userId;
 
     useEffect(() => {
         loadTransactions();
     }, []);
 
     loadTransactions = async () => {
-        const response = await api.get('/1/transactions');
+        const response = await api.get(`/${userId}/transactions`);
         const transactions = response.data;
 
         setTransactions(transactions);

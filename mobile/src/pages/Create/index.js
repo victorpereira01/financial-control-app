@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { RectButton, TextInput } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 import api from '../../services/api';
 import globalStyles from '../../../public/stylesheets/main';
@@ -13,6 +13,10 @@ export default function Create() {
     const [name, setName] = useState('');
     const [value, setValue] = useState('');
 
+    const route = useRoute();
+
+    const userId = route.params.userId;
+
     handleSubmit = async () => {
         const transaction = {
             name,
@@ -22,7 +26,7 @@ export default function Create() {
         if(name.length == 0 || value.length == 0) {
             alert('Please insert all fields'); 
         }else {
-            await api.post('/1/transactions', transaction);
+            await api.post(`/${userId}/transactions`, transaction);
             handleNavigateBack()
         }
     }
