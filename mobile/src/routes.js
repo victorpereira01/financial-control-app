@@ -10,9 +10,10 @@ import Transactions from './pages/Transactions';
 
 const AppStack = createStackNavigator();
 
-const navigationOptions = {
+const stackedPageOptions = {
     title: "Financial Control",
-    headerTitleStyle: { 
+    headerTitleStyle: {
+        marginRight: 55,
         alignSelf: 'center',
     },
     headerTintColor: "#8926D8",
@@ -21,16 +22,17 @@ const navigationOptions = {
     }
 }
 
-const stackedPageOptions = {
+const mainPageOptions = {
+    headerLeft: null,
     title: "Financial Control",
-    headerTitleStyle: { 
-        marginRight: 55,
+    headerTitleStyle: {
         alignSelf: 'center',
     },
     headerTintColor: "#8926D8",
     headerStyle: {
         backgroundColor: "white",
-    }
+    },
+    gesturesEnabled: false,
 }
 
 const initialPages = {
@@ -42,8 +44,8 @@ const Routes = () => {
         <NavigationContainer>
             <AppStack.Navigator>
                 <AppStack.Screen name="Login" component={Login} options={initialPages} />
-                <AppStack.Screen name="Register" component={Register} options={initialPages}/>
-                <AppStack.Screen name="Main" component={Main} options={navigationOptions} />
+                <AppStack.Screen name="Register" component={Register} options={initialPages} />
+                <AppStack.Screen name="Main" component={Main} options={mainPageOptions} />
                 <AppStack.Screen name="Create" component={Create} options={stackedPageOptions} />
                 <AppStack.Screen name="Transactions" component={Transactions} options={stackedPageOptions} />
             </AppStack.Navigator>
