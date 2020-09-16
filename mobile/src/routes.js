@@ -7,6 +7,8 @@ import Register from './pages/Register';
 import Main from './pages/Main';
 import Create from './pages/Create';
 import Transactions from './pages/Transactions';
+import Header from './components/Header';
+import { Button, Text } from 'react-native';
 
 const AppStack = createStackNavigator();
 
@@ -26,12 +28,16 @@ const mainPageOptions = {
     headerLeft: null,
     title: "Financial Control",
     headerTitleStyle: {
+        marginLeft: 50,
         alignSelf: 'center',
     },
     headerTintColor: "#8926D8",
     headerStyle: {
         backgroundColor: "white",
     },
+    headerRight: () => (
+        <Header>oi</Header>
+    ),
     gesturesEnabled: false,
 }
 
