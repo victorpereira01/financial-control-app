@@ -19,7 +19,10 @@ export default function Login() {
     handleSubmit = async () => {
         const user = {
             email,
-            password
+            password,
+            balance: 0,
+            revenue: 0,
+            expenses: 0
         }
 
         try {
