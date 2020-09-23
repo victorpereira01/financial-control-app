@@ -9,6 +9,8 @@ import api from '../../services/api';
 import landingStyles from '../../../public/stylesheets/landing';
 import mainStyles from '../../../public/stylesheets/main';
 
+import InputContainer from '../../components/InputContainer';
+
 export default function Login() {
 
     const navigation = useNavigation();
@@ -44,10 +46,7 @@ export default function Login() {
 
                     <Text style={landingStyles.title}>Sign Up</Text>
 
-                    <View style={landingStyles.inputContainer}>
-                        <Text style={landingStyles.inputText}>E-mail</Text>
-                        <TextInput style={landingStyles.input} autoCapitalize='none' onChangeText={setEmail}></TextInput>
-                    </View>
+                    <InputContainer name="E-mail" onChangeText={setEmail} isBold={true}/>
 
                     <View style={landingStyles.inputContainer}>
                         <Text style={landingStyles.inputText}>Password</Text>

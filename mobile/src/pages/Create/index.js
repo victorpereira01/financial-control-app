@@ -3,6 +3,8 @@ import { StyleSheet, View, Text } from 'react-native';
 import { RectButton, TextInput } from 'react-native-gesture-handler';
 import { useNavigation, useRoute } from '@react-navigation/native'
 
+import InputContainer from '../../components/InputContainer';
+
 import api from '../../services/api';
 import globalStyles from '../../../public/stylesheets/main';
 
@@ -23,9 +25,9 @@ export default function Create() {
             value
         }
 
-        if(name.length == 0 || value.length == 0) {
-            alert('Please insert all fields'); 
-        }else {
+        if (name.length == 0 || value.length == 0) {
+            alert('Please insert all fields');
+        } else {
             await api.post(`/${userId}/transactions`, transaction);
             handleNavigateBack()
         }
@@ -39,13 +41,11 @@ export default function Create() {
         <View style={globalStyles.container}>
             <Text style={globalStyles.title}>Add a Transaction</Text>
 
-            <View style={styles.inputContainer}>
-                <Text style={styles.placeholder}>Name</Text>
-                <TextInput style={styles.input} onChangeText={setName} />
-            </View>
+            <InputContainer name="Name" onChangeText={setName} />
+
             <View style={styles.inputContainer}>
                 <Text style={styles.placeholder}>Value</Text>
-                <TextInput keyboardType='numeric' style={styles.input} onChangeText={setValue} />
+                <TextInput style={styles.input} keyboardType='numeric' onChangeText={setValue} />
             </View>
 
             <View style={styles.blank}></View>
