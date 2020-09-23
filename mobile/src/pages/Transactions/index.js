@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useRoute } from '@react-navigation/native';
 import { StyleSheet, View, Text } from 'react-native';
 
 import api from '../../services/api';
 import globalStyles from '../../../public/stylesheets/main'
-import { useRoute } from '@react-navigation/native';
+import TransactionItem from '../../components/TransactionItem';
 
 export default function Transactions() {
 
@@ -39,10 +40,12 @@ export default function Transactions() {
             <View style={styles.transactionContainer}>
                 {transactions.map(transaction => {
                     return (
-                        <View style={globalStyles.transactionItem} key={transaction.id}>
-                            <Text style={globalStyles.transactionText} >{transaction.name}</Text>
-                            {isPositive(transaction)}
-                        </View>
+                        <TransactionItem
+                            key={transaction.id}
+                            id={transaction.id}
+                            name={transaction.name}
+                            value={isPositive(transaction)}
+                        />
                     )
                 })}
             </View>

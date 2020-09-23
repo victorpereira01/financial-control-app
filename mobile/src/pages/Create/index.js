@@ -3,10 +3,9 @@ import { StyleSheet, View, Text } from 'react-native';
 import { RectButton, TextInput } from 'react-native-gesture-handler';
 import { useNavigation, useRoute } from '@react-navigation/native'
 
-import InputContainer from '../../components/InputContainer';
-
 import api from '../../services/api';
 import globalStyles from '../../../public/stylesheets/main';
+import InputContainer from '../../components/InputContainer';
 
 export default function Create() {
 

@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { Stylesheet, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { TextInput, RectButton } from 'react-native-gesture-handler';
-import { Link, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import api from '../../services/api';
-
 import landingStyles from '../../../public/stylesheets/landing';
 import mainStyles from '../../../public/stylesheets/main';
-
 import InputContainer from '../../components/InputContainer';
 
 export default function Login() {
@@ -46,7 +44,7 @@ export default function Login() {
 
                     <Text style={landingStyles.title}>Sign Up</Text>
 
-                    <InputContainer name="E-mail" onChangeText={setEmail} isBold={true}/>
+                    <InputContainer name="E-mail" onChangeText={setEmail} isBold={true} />
 
                     <View style={landingStyles.inputContainer}>
                         <Text style={landingStyles.inputText}>Password</Text>
@@ -72,4 +70,3 @@ export default function Login() {
         </View>
     )
 }
-   

@@ -5,6 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 
 import api from '../../services/api';
 import globalStyles from '../../../public/stylesheets/main';
+import TransactionItem from '../../components/TransactionItem';
 
 export default function Main() {
 
@@ -86,10 +87,12 @@ export default function Main() {
             <View style={styles.transactionContainer}>
                 {transactions.slice(0, 5).map(transaction => {
                     return (
-                        <View style={globalStyles.transactionItem} key={transaction.id}>
-                            <Text style={globalStyles.transactionText} >{transaction.name}</Text>
-                            {isPositive(transaction)}
-                        </View>
+                        <TransactionItem 
+                            key={transaction.id} 
+                            id={transaction.id} 
+                            name={transaction.name}  
+                            value={isPositive(transaction)}
+                        />
                     )
                 })}
             </View>
