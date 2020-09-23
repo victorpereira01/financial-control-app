@@ -7,7 +7,7 @@
 
 ## 🚀 Tecnologias
 
-Esse projeto foi desenvolvido com as seguintes tecnologias:
+This project was developed with the following technologies:
 
 - Java
 - Spring Boot
@@ -37,7 +37,7 @@ $ npm install
 $ npm start 
 ```
 
-## 🤔 Como contribuir
+## 🤔 How to contribute
 
 - Fork this repo;
 - Create a branch with your feature: `git checkout -b my-feature`;
