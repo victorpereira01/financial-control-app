@@ -27,6 +27,10 @@ export default function Main() {
         loadTransactions();
     }, [])
 
+    useEffect(() => {
+        handleTransactions(transactions);
+    }, [transactions])
+
     loadData = async () => {
         const response = await api.get(`/${userId}`);
         const user = response.data;
@@ -51,6 +55,17 @@ export default function Main() {
         navigation.navigate('Transactions', {
             userId
         });
+    }
+
+    handleTransactions = (trc) => {
+        if (trc.length == 0) {
+            return (
+                <View style={styles.messageContainer}>
+                    <Text style={styles.messageText}>Welcome!</Text>
+                    <Text style={styles.messageText}>You don't have transactions yet</Text>
+                </View>
+            )
+        }
     }
 
     isPositive = (transaction) => {
@@ -85,12 +100,13 @@ export default function Main() {
             </View>
 
             <View style={styles.transactionContainer}>
+                {handleTransactions(transactions)}
                 {transactions.slice(0, 5).map(transaction => {
                     return (
-                        <TransactionItem 
-                            key={transaction.id} 
-                            id={transaction.id} 
-                            name={transaction.name}  
+                        <TransactionItem
+                            key={transaction.id}
+                            id={transaction.id}
+                            name={transaction.name}
                             value={isPositive(transaction)}
                         />
                     )
@@ -179,5 +195,14 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 15,
         fontFamily: 'Ubuntu_500Medium'
+    },
+    messageContainer: {
+        alignItems: 'center'
+    },
+    messageText: {
+        color: '#a6a6a6',
+        fontSize: 15,
+        fontFamily: 'Ubuntu_500Medium',
+        marginTop: 15
     }
 })
